@@ -1,0 +1,37 @@
+[
+    {
+        "id": "crazy",
+        "img": "media/crazy.svg",
+        "left": "media/crazy-bass.mp3",
+        "right": "media/crazy-guitar.mp3",
+        "duration": 20
+    },
+    {
+        "id": "hedwig",
+        "img": "media/hedwig.svg",
+        "left": "media/hedwig-left.mp3",
+        "right": "media/hedwig-right.mp3",
+        "duration": 20
+    },
+    {
+        "id": "invention13",
+        "img": "media/invention13.svg",
+        "left": "media/invention13-left.mp3",
+        "right": "media/invention13-right.mp3",
+        "duration": 25
+    },
+    {
+        "id": "mood",
+        "img": "media/mood.svg",
+        "left": "media/mood-bass.mp3",
+        "right": "media/mood-piano.mp3",
+        "duration": 30
+    },
+    {
+        "id": "starlight",
+        "img": "media/starlight.svg",
+        "left": "media/starlight-bass.mp3",
+        "right": "media/starlight-guitar.mp3",
+        "duration": 23
+    }
+]

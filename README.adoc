@@ -1,0 +1,31 @@
+= Multimedia combine
+
+Select media ressources and play them together.
+
+[source,sh]
+----
+cd web
+# run for dev
+python -m http.server 8080
+
+# run for prod
+python -m http.server 80
+----
+
+[source,sh]
+----
+# the container will start a web server on port 8080
+docker build --file Dockerfile --tag "musical-memory" .
+
+# exposes it on the 8080 port (dev)
+docker run --rm -p 8080:8080 musical-memory
+
+# exposes it on the 80 port (prod)
+docker run --rm -p 80:8080 musical-memory
+----
+
+== Sources
+
+https://creazilla.com/nodes/search?query=owls&section_id=1
+
+https://simplegrid.io/

@@ -1,0 +1,110 @@
+#left, #right {
+    display: inline-block;
+    width: 49%;
+}
+#left img, #right img {
+    display: block;
+}
+video {
+    width: 100%;
+}
+.row img {
+    width: 100%;
+    max-width: 100%;
+}
+.rounded {
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    padding: 20px;
+    border-color: #132921;
+}
+.card {
+    height: 100px;
+    text-align: center;
+}
+.card.back {
+    background: repeating-linear-gradient(
+        -45deg,
+        #477db7,
+        #477db7 10px,
+        rgba(235, 235, 235) 10px,
+        rgba(235, 235, 235) 20px
+    )
+}
+.card > img {
+    height: 100%;
+    width: auto;
+}
+.card.front {
+    background-image: radial-gradient(white 50%, rgb(202, 202, 202) 95%);
+}
+.flip-container {
+    perspective: 1000px;
+}
+.flip-container.hover .flipper {
+    transform: rotateY(180deg);
+}
+.flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+.flipper .front, .flipper .back {
+    backface-visibility: hidden;
+    position: fixed;
+    width: 88%;
+}
+.front {
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+.back {
+    transform: rotateY(180deg);
+}
+.flip-container {
+    height: 140px;
+}
+ /* The Modal (background) */
+ .modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content-box */
+.modal-content {
+    text-align: center;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 20%;
+    border: 2px solid #132921;
+    border-radius: 10px;
+  }
+  .modal-content img {
+    width: 80%;
+    max-width: 80%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  } 
