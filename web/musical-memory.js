@@ -20,28 +20,27 @@ class EventBus {
 const eventBus = new EventBus()
 eventBus.on('log', (event) => console.log(event))
 
-const audio0Elem = document.getElementById('audio0')
-const audio1Elem = document.getElementById('audio1')
+const playersElem = document.getElementById('players')
 
 const modal = document.getElementById('myModal')
 const modalImgElem = document.getElementById('modalImg')
 
 class AudioTune {
-    constructor(tune, side, img, audio, duration) {
+    constructor(tune, side, img, duration, playerElem) {
         this.tune = tune
         this.side = side
         this.img = img
-        this.audio = audio
         this.duration = duration
+        this.playerElem = playerElem
+    }
+    isComplementaryOf(audioTune) {
+        return (this.tune === audioTune.tune) && (this.side !== audioTune.side)
     }
 }
 class AudioTuneElementPair {
     constructor(audioTune, htmlElem) {
         this.audioTune = audioTune
         this.htmlElem = htmlElem
-    }
-    arePartsOfSameTune(otherPair) {
-        return (this.audioTune.tune === otherPair.audioTune.tune) && (this.audioTune.side !== otherPair.audioTune.side)
     }
 }
 
@@ -72,15 +71,15 @@ function playFlippedTunes() {
     const audioTuneAndElem0 = flippedAudioTunesAndElems[audioTuneIdsAndSides[0]]
     const audioTuneAndElem1 = flippedAudioTunesAndElems[audioTuneIdsAndSides[1]]
     
-    audio0Elem.setAttribute('src', audioTuneAndElem0.audioTune.audio)
-    audio0Elem.pause()
-    audio0Elem.currentTime = 0
-    audio1Elem.setAttribute('src', audioTuneAndElem1.audioTune.audio)
-    audio1Elem.pause()
-    audio1Elem.currentTime = 0
+    const audioTune0Player = audioTuneAndElem0.audioTune.playerElem
+    audioTune0Player.pause()
+    audioTune0Player.currentTime = 0
+    const audioTune1Player = audioTuneAndElem1.audioTune.playerElem
+    audioTune1Player.pause()
+    audioTune1Player.currentTime = 0
 
     // same song: play the tune, make the cards unflippable
-    if (audioTuneAndElem0.arePartsOfSameTune(audioTuneAndElem1)) {
+    if (audioTuneAndElem0.audioTune.isComplementaryOf(audioTuneAndElem1.audioTune)) {
         // shows the success modal
         eventBus.publish('show-modal', {
             src: 'dancing-cat.gif',
@@ -98,18 +97,18 @@ function playFlippedTunes() {
             duration: 7,
             onHide: () => {
                 // stops the music and flip the cars back
-                audio0Elem.pause()
-                audio1Elem.pause()
+                audioTune0Player.pause()
+                audioTune1Player.pause()
 
-                audioTuneAndElem0.htmlElem.classList.toggle('hover')
-                audioTuneAndElem1.htmlElem.classList.toggle('hover')
+                audioTuneAndElem0.htmlElem.classList.add('hover')
+                audioTuneAndElem1.htmlElem.classList.add('hover')
             }
         })
     }
 
     // plays the song
-    audio0Elem.play()
-    audio1Elem.play()
+    audioTune0Player.play()
+    audioTune1Player.play()
 
     // do not flag these flipped cards anymore
     delete flippedAudioTunesAndElems[audioTuneIdsAndSides[0]]
@@ -130,7 +129,7 @@ eventBus.on('flip-card', cardClickEvent => {
     switch (Object.keys(flippedAudioTunesAndElems).length) {
         case 0:
         case 1:
-            cardFlipperElem.classList.toggle('hover')
+            cardFlipperElem.classList.remove('hover')
             flippedAudioTunesAndElems[audioTuneIdAndSide] = new AudioTuneElementPair(audioTune, cardFlipperElem)
             break
         default:
@@ -154,8 +153,17 @@ function cardHtmlString(audioTune) {
         </div>
     </div>`.trim()
 }
+
 function shuffle(items) {
     items.sort(() => Math.random() - 0.5)
+}
+
+function playerElem(audioHref) {
+    const audioElem = document.createElement('audio')
+    audioElem.setAttribute('src', audioHref)
+    playersElem.appendChild(audioElem)
+
+    return audioElem
 }
 
 function createCards(tunes) {
@@ -163,10 +171,14 @@ function createCards(tunes) {
     const rightCards = []
 
     tunes.forEach(tune => {
-        const leftAudioTune = new AudioTune(tune['id'], 'left', tune['img'], tune['left'], tune['duration'])
+        const leftAudioTune = new AudioTune(
+            tune['id'], 'left', tune['img'], tune['duration'], playerElem(tune['left'])
+        )
         audioTunes[`${leftAudioTune.tune}-${leftAudioTune.side}`] = leftAudioTune
 
-        const rightAudioTune = new AudioTune(tune['id'], 'right', tune['img'], tune['right'], tune['duration'])
+        const rightAudioTune = new AudioTune(
+            tune['id'], 'right', tune['img'], tune['duration'], playerElem(tune['right'])
+        )
         audioTunes[`${rightAudioTune.tune}-${rightAudioTune.side}`] = rightAudioTune
 
         const leftAudioCardHtmlString = cardHtmlString(leftAudioTune)
@@ -177,8 +189,6 @@ function createCards(tunes) {
 
     // shuffles the card sets then displays them
     shuffle(leftCards)
-    shuffle(leftCards)
-    shuffle(rightCards)
     shuffle(rightCards)
     const cardsHolder = document.getElementById('cards')
     leftCards.forEach((leftCardString, cardIndex) => {
