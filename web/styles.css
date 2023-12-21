@@ -19,6 +19,16 @@ video {
     padding: 20px;
     border-color: #132921;
 }
+.reload {
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px;
+    border-color: #132921;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+}
 .card {
     height: 100px;
     text-align: center;
