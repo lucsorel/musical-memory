@@ -1,12 +1,6 @@
-#left, #right {
+.game-mode-selector {
+    width: 30%;
     display: inline-block;
-    width: 49%;
-}
-#left img, #right img {
-    display: block;
-}
-video {
-    width: 100%;
 }
 .row img {
     width: 100%;
@@ -42,12 +36,21 @@ video {
         rgba(235, 235, 235) 20px
     )
 }
-.card > img {
+.card img {
     height: 100%;
     width: auto;
 }
 .card.front {
     background-image: radial-gradient(white 50%, rgb(202, 202, 202) 95%);
+}
+.rounded.card.front img.hard {
+    display: none;
+}
+.hard .rounded.card.front .tune {
+    display: none;
+}
+.hard .rounded.card.front img.hard {
+    display: inline;
 }
 .flip-container {
     perspective: 1000px;

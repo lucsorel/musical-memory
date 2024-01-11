@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="musical-memory-favicon.png" sizes="32x32" />
-        <title>🎶🧠 Memory musical</title>
+        <title>Memory musical 🧠🎶</title>
         <meta http-equiv="cache-control" content="max-age=0" />
         <meta http-equiv="cache-control" content="no-cache" />
         <meta http-equiv="expires" content="0" />
@@ -18,10 +18,21 @@
         <div class="row">
             <div class="col-6">
                 <h1>Memory musical 🎶</h1>
+                <p>
+                    <span class="game-mode-selector">Mode de jeu :</span>
+                    <span class="game-mode-selector">
+                        <input type="radio" autocomplete="off" id="normal" name="game-mode" value="normal" onchange="eventBus.publish('game-mode', {mode: 'normal'})" checked />
+                        <label for="normal">normal</label>
+                    </span>
+                    <span class="game-mode-selector">
+                        <input type="radio" autocomplete="off" id="hard" name="game-mode" value="hard" onchange="eventBus.publish('game-mode', {mode: 'hard'})" />
+                        <label for="hard">difficile</label>
+                    </span>
+                </p>
             </div>
             <div class="col-6">
                 <p>
-                    Reconstituer les paires de cartes musicales entre les colonnes de gauche et de droite (sur un écran étroit, les cartes sont sur une seule colonne).
+                    Reconstituez les paires de cartes musicales entre les colonnes de gauche et de droite (sur un écran étroit, les cartes sont sur une seule colonne).
                     <a class="reload" href=".">Rejouer 🔄</a>
                 </p>
             </div>

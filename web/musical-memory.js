@@ -25,6 +25,20 @@ const playersElem = document.getElementById('players')
 const modal = document.getElementById('myModal')
 const modalImgElem = document.getElementById('modalImg')
 
+const cardsHolder = document.getElementById('cards')
+eventBus.on('game-mode', (event) => {
+    cardsHolder.classList.remove('normal', 'hard')
+
+    switch (event['mode']) {
+        case 'hard' :
+        case 'normal' :
+            cardsHolder.classList.add(event['mode'])
+            break
+        default:
+            console.error(`unsupported game-mode: '${event['mode']}'`)
+    }
+})
+
 class AudioTune {
     constructor(tune, side, img, duration, playerElem) {
         this.tune = tune
@@ -147,7 +161,8 @@ function cardHtmlString(audioTune) {
     <div class="flip-container hover" onclick="eventBus.publish('flip-card', {htmlElem: this, audioTuneIdAndSide: '${audioTune.tune}-${audioTune.side}'});">
         <div class="flipper">
             <div class="rounded card front">
-                <img src="${audioTune.img}" alt="" />
+                <img class="hard" src="media/questioning-cat.png" alt="" />
+                <img class="tune" src="${audioTune.img}" alt="" />
             </div>
             <div class="rounded card back"></div>
         </div>
@@ -190,7 +205,6 @@ function createCards(tunes) {
     // shuffles the card sets then displays them
     shuffle(leftCards)
     shuffle(rightCards)
-    const cardsHolder = document.getElementById('cards')
     leftCards.forEach((leftCardString, cardIndex) => {
         const rowElem = document.createElement('div')
         rowElem.setAttribute('class', 'row')
